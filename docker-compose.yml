@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  api_gateway:
+    container_name: api_gateway
+    build: ./ivi-clone-api-gateway
+    ports:
+      - "3111:3111"
+    restart: always
