@@ -6,3 +6,29 @@ services:
     ports:
       - "3111:3111"
     restart: always
+  genres:
+    container_name: genres
+    build: ./ivi-clone-genres-ms
+    ports:
+      - "3200:3200"
+    restart: always
+    depends_on:
+      - genres_pg
+  genres_pg:
+    container_name: genres_pg
+    image: postgres:15.2-alpine
+    environment:
+      POSTGRES_DB: general
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    volumes:
+      - '/var/lib/postgres/data:/var/lib/postgresql/data'
+    ports:
+      - "5432"
+    restart: always
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.11.3-management
+    restart: always
+    ports:
+      - "5672"
