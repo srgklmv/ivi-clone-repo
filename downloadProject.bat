@@ -1,8 +1,10 @@
 echo off
 
 IF EXIST "ivi-clone-api-gateway" (
-    echo Updating Local Repo
-    git pull origin main
+    echo Updating Local Repo ivi-clone-api-gateway
+    cd ivi-clone-api-gateway
+    git pull origin master
+    cd ..
     echo Local Repo has been updated
 ) ELSE (
     echo Downloading API Gateway...
@@ -11,8 +13,10 @@ IF EXIST "ivi-clone-api-gateway" (
 )
 
 IF EXIST "ivi-clone-genres-ms" (
-    echo Updating Local Repo
+    echo Updating Local Repo ivi-clone-genres-ms
+    cd ivi-clone-genres-ms
     git pull origin master
+    cd ..
     echo Local Repo has been updated
 ) ELSE (
     echo Downloading Genres MS...
@@ -20,11 +24,5 @@ IF EXIST "ivi-clone-genres-ms" (
     echo Genres MS downloaded.
 )
 
-cd ivi-clone-api-gateway
-npm i
-cd ..
-
 echo Downloading complete! Now you can start application using docker-compose.
 pause
-
-
