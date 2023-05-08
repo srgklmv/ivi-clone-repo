@@ -3,12 +3,16 @@ services:
   api_gateway:
     container_name: api_gateway
     build: ./ivi-clone-api-gateway
+
     ports:
       - "3111:3111"
     restart: always
   genres:
     container_name: genres
     build: ./ivi-clone-genres-ms
+    environment:
+      - RMQ_URL=amqp://rabbitmq:5672
+      - DB_HOST=genres_pg
     ports:
       - "3200:3200"
     restart: always
