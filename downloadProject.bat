@@ -57,7 +57,7 @@ IF EXIST "ivi-clone-profiles-ms" (
     echo Local Repo has been updated
 ) ELSE (
     echo Downloading Profiles MS...
-    git clone https://github.com/srgklmv/ivi-clone-profiles-ms
+    git clone https://github.com/JcJet/ivi-clone-profiles-ms
     cd ivi-clone-profiles-ms
     call npm i
     cd ..
@@ -73,7 +73,7 @@ IF EXIST "ivi-clone-auth-ms" (
     echo Local Repo has been updated
 ) ELSE (
     echo Downloading Auth MS...
-    git clone https://github.com/srgklmv/ivi-clone-auth-ms
+    git clone https://github.com/JcJet/ivi-clone-auth-ms
     cd ivi-clone-auth-ms
     call npm i
     cd ..
@@ -89,7 +89,7 @@ IF EXIST "ivi-clone-comments-ms" (
     echo Local Repo has been updated
 ) ELSE (
     echo Downloading Comments MS...
-    git clone https://github.com/srgklmv/ivi-clone-comments-ms
+    git clone https://github.com/JcJet/ivi-clone-comments-ms
     cd ivi-clone-comments-ms
     call npm i
     cd ..
@@ -105,7 +105,7 @@ IF EXIST "ivi-clone-movies-ms" (
     echo Local Repo has been updated
 ) ELSE (
     echo Downloading Movies MS...
-    git clone https://github.com/srgklmv/ivi-clone-movies-ms
+    git clone https://github.com/IliaMrt/ivi-clone-movies-ms
     cd ivi-clone-movies-ms
     call npm i
     cd ..
@@ -121,7 +121,7 @@ IF EXIST "ivi-clone-roles-ms" (
     echo Local Repo has been updated
 ) ELSE (
     echo Downloading Roles MS...
-    git clone https://github.com/srgklmv/ivi-clone-roles-ms
+    git clone https://github.com/JcJet/ivi-clone-roles-ms
     cd ivi-clone-roles-ms
     call npm i
     cd ..
