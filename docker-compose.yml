@@ -1,5 +1,14 @@
 version: "3.9"
+
 services:
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.11.3-management
+    restart: always
+    ports:
+      - "5672"
+
   api_gateway:
     container_name: api_gateway
     build:
@@ -179,10 +188,3 @@ services:
     ports:
       - "5432"
     restart: always
-
-  rabbitmq:
-    container_name: rabbitmq
-    image: rabbitmq:3.11.3-management
-    restart: always
-    ports:
-      - "5672"
