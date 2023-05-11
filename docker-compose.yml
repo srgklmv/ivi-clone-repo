@@ -156,6 +156,30 @@ services:
       - "5432"
     restart: always
 
+  roles:
+    container_name: roles
+    build:
+      context: ./ivi-clone-roles-ms
+      dockerfile: ./Dockerfile
+      target: development
+    environment:
+      - RMQ_URL=amqp://rabbitmq:5672
+      - DB_HOST=roles_pg
+    restart: always
+    depends_on:
+      - roles_pg
+
+  roles_pg:
+    container_name: roles_pg
+    image: postgres:15.2-alpine
+    environment:
+      POSTGRES_DB: roles
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432"
+    restart: always
+
   rabbitmq:
     container_name: rabbitmq
     image: rabbitmq:3.11.3-management
