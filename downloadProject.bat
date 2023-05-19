@@ -105,7 +105,7 @@ IF EXIST "ivi-clone-movies-ms" (
     echo Local Repo has been updated
 ) ELSE (
     echo Downloading Movies MS...
-    git clone -b development https://github.com/srgklmv/ivi-clone-movies-ms
+    git clone -b master https://github.com/IliaMrt/ivi-clone-movies-ms
     cd ivi-clone-movies-ms
     call npm i
     cd ..
