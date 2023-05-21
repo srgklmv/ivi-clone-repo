@@ -14,76 +14,60 @@ services:
     build:
       context: ./ivi-clone-api-gateway
       dockerfile: ./Dockerfile
-      target: development
-    environment:
-      - RMQ_URL=amqp://rabbitmq:5672
+      target: production
     ports:
       - "3100:3100"
     restart: always
 
-#  auth:
-#    container_name: auth
-#    build:
-#      context: ./ivi-clone-auth-ms
-#      dockerfile: ./Dockerfile
-#      target: development
-#    environment:
-#      - RMQ_URL=amqp://rabbitmq:5672
-#      - DB_HOST=auth_pg
-#    restart: always
-#    depends_on:
-#      - auth_pg
-#
-#  auth_pg:
-#    container_name: auth_pg
-#    image: postgres:15.2-alpine
-#    environment:
-#      POSTGRES_DB: auth
-#      POSTGRES_USER: admin
-#      POSTGRES_PASSWORD: admin
-#    ports:
-#      - "5432"
-#    restart: always
-#
-#  comments:
-#    container_name: comments
-#    build:
-#      context: ./ivi-clone-comments-ms
-#      dockerfile: ./Dockerfile
-#      target: development
-#    environment:
-#      - RMQ_URL=amqp://rabbitmq:5672
-#      - DB_HOST=comments_pg
-#    restart: always
-#    depends_on:
-#      - comments_pg
-#
-#  comments_pg:
-#    container_name: comments_pg
-#    image: postgres:15.2-alpine
-#    environment:
-#      POSTGRES_DB: comments
-#      POSTGRES_USER: admin
-#      POSTGRES_PASSWORD: admin
-#    ports:
-#      - "5432"
-#    restart: always
+  auth:
+    container_name: auth
+    build:
+      context: ./ivi-clone-auth-ms
+      dockerfile: ./Dockerfile
+      target: development
+    restart: always
+    depends_on:
+      - auth_pg
+
+  auth_pg:
+    container_name: auth_pg
+    image: postgres:15.2-alpine
+    environment:
+      POSTGRES_DB: auth
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432"
+    restart: always
+
+  comments:
+    container_name: comments
+    build:
+      context: ./ivi-clone-comments-ms
+      dockerfile: ./Dockerfile
+      target: development
+    restart: always
+    depends_on:
+      - comments_pg
+
+  comments_pg:
+    container_name: comments_pg
+    image: postgres:15.2-alpine
+    environment:
+      POSTGRES_DB: comments
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432"
+    restart: always
 
   genres:
     container_name: genres
     build:
       context: ./ivi-clone-genres-ms
       dockerfile: ./Dockerfile
-      target: development
-    environment:
-      - RMQ_URL=amqp://rabbitmq:5672
-      - DB_HOST=genres_pg
-      - DB_USERNAME=admin
-      - DB_PASSWORD=admin
-      - DB_NAME=genres
+      target: production
     restart: always
-    ports:
-      - "3200:3200"
     depends_on:
       - genres_pg
 
@@ -103,13 +87,7 @@ services:
     build:
       context: ./ivi-clone-movies-ms
       dockerfile: ./Dockerfile
-      target: development
-    environment:
-      - RMQ_URL=amqp://rabbitmq:5672
-      - POSTGRES_HOST=movies_pg
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=admin
-      - POSTGRES_DB=movies
+      target: production
     restart: always
     depends_on:
       - movies_pg
@@ -124,16 +102,13 @@ services:
     ports:
       - "5432"
     restart: always
-#
+
 #  persons:
 #    container_name: persons
 #    build:
 #      context: ./ivi-clone-persons-ms
 #      dockerfile: ./Dockerfile
-#      target: development
-#    environment:
-#      - RMQ_URL=amqp://rabbitmq:5672
-#      - DB_HOST=persons_pg
+#      target: production
 #    restart: always
 #    depends_on:
 #      - persons_pg
@@ -148,51 +123,45 @@ services:
 #    ports:
 #      - "5432"
 #    restart: always
-#
-#  profiles:
-#    container_name: profiles
-#    build:
-#      context: ./ivi-clone-profiles-ms
-#      dockerfile: ./Dockerfile
-#      target: development
-#    environment:
-#      - RMQ_URL=amqp://rabbitmq:5672
-#      - DB_HOST=profiles_pg
-#    restart: always
-#    depends_on:
-#      - profiles_pg
-#
-#  profiles_pg:
-#    container_name: profiles_pg
-#    image: postgres:15.2-alpine
-#    environment:
-#      POSTGRES_DB: profiles
-#      POSTGRES_USER: admin
-#      POSTGRES_PASSWORD: admin
-#    ports:
-#      - "5432"
-#    restart: always
-#
-#  roles:
-#    container_name: roles
-#    build:
-#      context: ./ivi-clone-roles-ms
-#      dockerfile: ./Dockerfile
-#      target: development
-#    environment:
-#      - RMQ_URL=amqp://rabbitmq:5672
-#      - DB_HOST=roles_pg
-#    restart: always
-#    depends_on:
-#      - roles_pg
-#
-#  roles_pg:
-#    container_name: roles_pg
-#    image: postgres:15.2-alpine
-#    environment:
-#      POSTGRES_DB: roles
-#      POSTGRES_USER: admin
-#      POSTGRES_PASSWORD: admin
-#    ports:
-#      - "5432"
-#    restart: always
+
+  profiles:
+    container_name: profiles
+    build:
+      context: ./ivi-clone-profiles-ms
+      dockerfile: ./Dockerfile
+      target: development
+    restart: always
+    depends_on:
+      - profiles_pg
+
+  profiles_pg:
+    container_name: profiles_pg
+    image: postgres:15.2-alpine
+    environment:
+      POSTGRES_DB: profiles
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432"
+    restart: always
+
+  roles:
+    container_name: roles
+    build:
+      context: ./ivi-clone-roles-ms
+      dockerfile: ./Dockerfile
+      target: development
+    restart: always
+    depends_on:
+      - roles_pg
+
+  roles_pg:
+    container_name: roles_pg
+    image: postgres:15.2-alpine
+    environment:
+      POSTGRES_DB: roles
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432"
+    restart: always
