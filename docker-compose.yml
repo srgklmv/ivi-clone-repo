@@ -87,7 +87,6 @@ services:
     build:
       context: ./ivi-clone-movies-ms
       dockerfile: ./Dockerfile
-#      target: production
     restart: always
     depends_on:
       - movies_pg
@@ -103,26 +102,25 @@ services:
       - "5432"
     restart: always
 
-#  persons:
-#    container_name: persons
-#    build:
-#      context: ./ivi-clone-persons-ms
-#      dockerfile: ./Dockerfile
-#      target: production
-#    restart: always
-#    depends_on:
-#      - persons_pg
-#
-#  persons_pg:
-#    container_name: persons_pg
-#    image: postgres:15.2-alpine
-#    environment:
-#      POSTGRES_DB: persons
-#      POSTGRES_USER: admin
-#      POSTGRES_PASSWORD: admin
-#    ports:
-#      - "5432"
-#    restart: always
+  persons:
+    container_name: persons
+    build:
+      context: ./ivi-clone-persons-ms
+      dockerfile: ./Dockerfile
+    restart: always
+    depends_on:
+      - persons_pg
+
+  persons_pg:
+    container_name: persons_pg
+    image: postgres:15.2-alpine
+    environment:
+      POSTGRES_DB: persons
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432"
+    restart: always
 
   profiles:
     container_name: profiles
