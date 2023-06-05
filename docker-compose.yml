@@ -8,16 +8,11 @@ services:
     restart: always
     ports:
       - "5672"
-
-  api_gateway:
-    container_name: api_gateway
-    build:
-      context: ./ivi-clone-api-gateway
-      dockerfile: ./Dockerfile
-#      target: production
-    ports:
-      - "3100:3100"
-    restart: always
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 30s
+      retries: 10
 
   auth:
     container_name: auth
@@ -27,7 +22,10 @@ services:
       target: development
     restart: always
     depends_on:
-      - auth_pg
+      rabbitmq:
+        condition: service_healthy
+      auth_pg:
+        condition: service_healthy
 
   auth_pg:
     container_name: auth_pg
@@ -36,6 +34,8 @@ services:
       POSTGRES_DB: auth
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
+    healthcheck:
+      test: pg_isready -U postgres
     ports:
       - "5432"
     restart: always
@@ -48,7 +48,8 @@ services:
       target: development
     restart: always
     depends_on:
-      - comments_pg
+      comments_pg:
+        condition: service_healthy
 
   comments_pg:
     container_name: comments_pg
@@ -57,19 +58,24 @@ services:
       POSTGRES_DB: comments
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
+    healthcheck:
+      test: pg_isready -U postgres
     ports:
       - "5432"
     restart: always
+    depends_on:
+      movies:
+        condition: service_started
 
   genres:
     container_name: genres
     build:
       context: ./ivi-clone-genres-ms
       dockerfile: ./Dockerfile
-#      target: production
     restart: always
     depends_on:
-      - genres_pg
+      genres_pg:
+        condition: service_healthy
 
   genres_pg:
     container_name: genres_pg
@@ -78,9 +84,14 @@ services:
       POSTGRES_DB: genres
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
+    healthcheck:
+      test: pg_isready -U postgres
     ports:
       - "5432"
     restart: always
+    depends_on:
+      profiles:
+        condition: service_started
 
   movies:
     container_name: movies
@@ -89,7 +100,8 @@ services:
       dockerfile: ./Dockerfile
     restart: always
     depends_on:
-      - movies_pg
+      movies_pg:
+        condition: service_healthy
 
   movies_pg:
     container_name: movies_pg
@@ -98,9 +110,14 @@ services:
       POSTGRES_DB: movies
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
+    healthcheck:
+      test: pg_isready -U postgres
     ports:
       - "5432"
     restart: always
+    depends_on:
+      persons:
+        condition: service_started
 
   persons:
     container_name: persons
@@ -109,7 +126,8 @@ services:
       dockerfile: ./Dockerfile
     restart: always
     depends_on:
-      - persons_pg
+      persons_pg:
+        condition: service_healthy
 
   persons_pg:
     container_name: persons_pg
@@ -118,9 +136,14 @@ services:
       POSTGRES_DB: persons
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
+    healthcheck:
+      test: pg_isready -U postgres
     ports:
       - "5432"
     restart: always
+    depends_on:
+      genres:
+        condition: service_started
 
   profiles:
     container_name: profiles
@@ -130,7 +153,9 @@ services:
       target: development
     restart: always
     depends_on:
-      - profiles_pg
+      profiles_pg:
+        condition: service_healthy
+
 
   profiles_pg:
     container_name: profiles_pg
@@ -139,9 +164,14 @@ services:
       POSTGRES_DB: profiles
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
+    healthcheck:
+      test: pg_isready -U postgres
     ports:
       - "5432"
     restart: always
+    depends_on:
+      roles:
+        condition: service_started
 
   roles:
     container_name: roles
@@ -151,7 +181,9 @@ services:
       target: development
     restart: always
     depends_on:
-      - roles_pg
+      roles_pg:
+        condition: service_healthy
+
 
   roles_pg:
     container_name: roles_pg
@@ -160,6 +192,23 @@ services:
       POSTGRES_DB: roles
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
+    healthcheck:
+      test: pg_isready -U postgres
     ports:
       - "5432"
     restart: always
+    depends_on:
+      auth:
+        condition: service_started
+
+  api_gateway:
+    container_name: api_gateway
+    build:
+      context: ./ivi-clone-api-gateway
+      dockerfile: ./Dockerfile
+    ports:
+      - "3100:3100"
+    restart: always
+    depends_on:
+      comments:
+        condition: service_started
