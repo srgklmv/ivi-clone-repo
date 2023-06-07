@@ -11,8 +11,8 @@ This application was developed by [Ilya Martens](https://github.com/IliaMrt),
 [Vladimiv Andreev](https://github.com/JcJet) and [Sergey Klimov](https://github.com/srgklmv) with NestJS 
 framework as a part of education process and for education purposes only.
 
-Application provides access to movies aggregator, including movies and persons (actors, directors etc.) database,
-ability to create personal account and even became an admin to create and change
+Application provides access to movies aggregator, including movies and persons (actors, directors etc.) databases,
+ability to create personal accounts and even became an admin to create and change
 movies, genres and other data! But only with our (developers) willingness. :)
 
 Now you can access the [**Application backend API reference**](http://193.32.203.137:4000/api#/) or 
